@@ -1,6 +1,7 @@
 package projektwdsi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -33,5 +34,33 @@ public class ProjektWdSI {
                     " łączna wartość: "+ (float)przedmioty.stream().mapToDouble(Przedmiot::getWartosc).sum()+
                     " łączny rozmiar: " + przedmioty.stream().mapToDouble(Przedmiot::getRozmiar).sum());
         }
-    
+    public static void zachlanie()// wybiera najpierw najdrozsze przedmioty do najtańszych wg fitness function poki sie mieszkcza w plecaku
+        {// tablica musi być najpierw posortowana !!!!
+            Plecak rozwiazanie = new Plecak();
+            System.out.println("\rrowiazanie algorytmem zachlanym:\r");
+            for (int i = 0; i < przedmioty.size(); i++)
+            {
+                if (rozwiazanie.addPrzedmiot(przedmioty.get(i)))
+                {
+                    System.out.println(przedmioty.get(i).ToString());
+                }
+                             
+            }
+            System.out.println(
+                    "ilosc przedmiotów: "+rozwiazanie.zawartosc.size()+
+                    " łączna wartość: "+ (float)rozwiazanie.zawartosc.stream().mapToDouble(Przedmiot::getWartosc).sum()+
+                    " łączny rozmiar: " + rozwiazanie.zawartosc.stream().mapToInt(Przedmiot::getRozmiar).sum()+ 
+                            " miejsce w plecaku " + Plecak.rozmiarPlecaka);
+        }
+        public static void main(String[] args)
+        {System.out.println("loool");
+            //wypisz_przedmioty();
+            Random rnd = new Random();// ograniczenie gorne dla plecaka, losujemy jego romzmiar
+            Plecak.rozmiarPlecaka =  rnd.nextInt( 10000)+10;// okresla rozmiar plecaka
+            Collections.sort(przedmioty);//sortowanie tablicy przedmioty dla algorytmu zachlanny (od najdrozszego do najtanszego, )
+           //wypisz_przedmioty();
+            zachlanie();
+          System.exit(0);  
+        }
+        
 }
